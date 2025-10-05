@@ -179,3 +179,114 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     document.querySelector('#sidebar li[data-tab="loja"]').click();
 });
+// Adicionar as seguintes funções ao seu Painel.js
+
+// --- LÓGICA GERAL DE MODAL ---
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'block';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// Fechar modais ao clicar fora ou no X
+document.querySelectorAll('.close-btn').forEach(btn => {
+    btn.onclick = function() {
+        closeModal(this.closest('.modal').id);
+    };
+});
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        closeModal(event.target.id);
+    }
+};
+
+
+// --- FUNÇÕES DE CATEGORIAS ---
+
+document.getElementById('create-cat-btn').addEventListener('click', () => {
+    // Resetar formulário antes de abrir
+    document.getElementById('cat-nome').value = '';
+    document.getElementById('cat-sub').checked = false;
+    document.getElementById('cat-sub-nome').value = '';
+    openModal('modal-categorias');
+});
+
+document.getElementById('save-cat-btn').addEventListener('click', () => {
+    const nome = document.getElementById('cat-nome').value;
+    const temSub = document.getElementById('cat-sub').checked;
+    const subNome = document.getElementById('cat-sub-nome').value;
+
+    if (!nome) { alert('Nome da categoria é obrigatório.'); return; }
+
+    const novaCat = {
+        id: Date.now(), // ID único
+        nome: nome,
+        temSub: temSub,
+        subNome: temSub ? subNome : null
+    };
+
+    // 1. Coleta dados atuais (ou inicializa)
+    let data = collectFormData();
+    if (!data.itens.categorias) data.itens.categorias = [];
+    
+    // 2. Adiciona e salva
+    data.itens.categorias.push(novaCat);
+    localStorage.setItem('configData', JSON.stringify(data));
+    alert(`Categoria "${nome}" adicionada! Salve no Painel.`);
+    
+    closeModal('modal-categorias');
+    // Força a atualização do painel de itens
+    renderItemsLists(data);
+});
+
+
+// --- FUNÇÕES DE PRODUTOS ---
+
+document.getElementById('add-item-btn').addEventListener('click', () => {
+    // Lógica para popular o SELECT de categorias antes de abrir o modal
+    const data = collectFormData();
+    const select = document.getElementById('item-categoria-select');
+    select.innerHTML = '<option value="">-- Selecione a Categoria --</option>';
+    data.itens.categorias.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat.id;
+        opt.textContent = cat.nome;
+        select.appendChild(opt);
+    });
+    
+    // Resetar formulário (implementação omitida para brevidade)
+    openModal('modal-item');
+});
+
+document.getElementById('save-item-btn').addEventListener('click', () => {
+    // ... Lógica para coletar e salvar o item de forma semelhante à categoria ...
+    alert('Item salvo (Lógica completa a ser implementada)!');
+    closeModal('modal-item');
+});
+
+
+// --- FUNÇÃO PARA RENDERIZAR LISTAS (Simples) ---
+
+function renderItemsLists(data) {
+    const categoriasList = document.getElementById('categorias-list');
+    categoriasList.innerHTML = '';
+    
+    (data.itens.categorias || []).forEach(cat => {
+        const item = document.createElement('div');
+        item.className = 'list-item';
+        item.innerHTML = `<strong>${cat.nome}</strong> ${cat.temSub ? `(Sub: ${cat.subNome})` : ''} 
+                          <button>Editar</button> <button>Excluir</button>`;
+        categoriasList.appendChild(item);
+    });
+    
+    // ... Lógica para renderizar produtos e modos...
+}
+
+// Altere a função de inicialização para chamar renderItemsLists(data)
+// Exemplo:
+// if (localStorage.getItem('configData')) {
+//    const initialData = JSON.parse(localStorage.getItem('configData'));
+//    renderItemsLists(initialData);
+// }
