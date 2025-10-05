@@ -1,0 +1,47 @@
+<div id="totem-app" style="max-width: 500px; margin: 0 auto; border: 1px solid #ddd; background: #fff;">
+
+    <header style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background-color: #1abc9c; color: white; position: sticky; top: 0; z-index: 10;">
+        <button id="menu-toggle" style="background: none; border: none; color: white; font-size: 1.5em; cursor: pointer;">|||</button>
+        <span id="store-logo" style="font-weight: bold;">[Logo] NOME DA LOJA</span>
+        <button id="login-btn" style="background: none; border: 1px solid white; color: white; padding: 5px 10px; border-radius: 5px; cursor: pointer;">[Entrar]</button>
+    </header>
+
+    <nav id="category-bar" style="display: flex; overflow-x: auto; padding: 10px 0; background-color: #ecf0f1; border-bottom: 1px solid #ddd;">
+        <button style="margin: 0 5px; padding: 8px 15px; border: none; background-color: #34495e; color: white; border-radius: 20px;">Categoria 1</button>
+        <button style="margin: 0 5px; padding: 8px 15px; border: 1px solid #ccc; background-color: white; border-radius: 20px;">Categoria 2</button>
+        </nav>
+
+    <main id="totem-body" style="padding: 10px;">
+        
+        <section id="cardapio-carousel" style="min-height: 200px; background: #eee; margin-bottom: 20px; text-align: center; padding: 20px;">
+            <h2>CARROSSEL Cardápio</h2>
+            <div id="item-display">
+                <p>[Iten1] [Iten2] [Iten3]...</p>
+                <button style="padding: 10px; background-color: #1abc9c; color: white; border: none; border-radius: 5px;">Adicionar</button>
+            </div>
+        </section>
+
+        <section id="banner-carousel" style="min-height: 100px; background: #ccc; text-align: center; padding: 10px;">
+            <h3>CARROSSEL COM BANNER</h3>
+            <p>[Destaque1] [Destaque2]....</p>
+        </section>
+
+        <aside id="menu-sidebar" style="position: fixed; top: 0; left: -250px; height: 100%; width: 250px; background-color: #333; color: white; padding-top: 50px; transition: left 0.3s; z-index: 20;">
+            <ul style="list-style: none; padding: 0;">
+                <li style="padding: 15px; border-bottom: 1px solid #444;">• Cardápio (Grid)</li>
+                <li style="padding: 15px; border-bottom: 1px solid #444;">• Lançamentos</li>
+                <li style="padding: 15px; border-bottom: 1px solid #444;">• Promoção do dia</li>
+                <li style="padding: 15px;">• Quem Somos</li>
+                <li style="padding: 15px;">• Ajuda (Pop-up)</li>
+            </ul>
+        </aside>
+
+    </main>
+
+    <footer style="position: sticky; bottom: 0; background-color: #f4f4f4; padding: 10px; border-top: 1px solid #ddd; display: flex; justify-content: space-around;">
+        <button style="padding: 12px 20px; background-color: #3498db; color: white; border: none; border-radius: 8px; flex-grow: 1; margin-right: 5px;">Delivery</button>
+        <button style="padding: 12px 20px; background-color: #2ecc71; color: white; border: none; border-radius: 8px; flex-grow: 1; margin-left: 5px;">Retirar</button>
+        <button style="padding: 12px; background-color: #e74c3c; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; margin-left: 10px; font-size: 1.2em;">☎️</button>
+    </footer>
+
+</div>
