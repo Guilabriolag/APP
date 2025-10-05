@@ -84,6 +84,61 @@
                     <button id="create-gerenciar-btn">Criar (Promoção / Modo)</button>
                     <button id="edit-gerenciar-btn">Editar</button>
                 </div>
+                <section id="itens" class="tab-content" data-group="itens">
+    <h2>ITENS (Cardápio)</h2>
+    
+    <div data-array-key="categorias">
+        <h3>## Categorias</h3>
+        <button id="create-cat-btn" class="action-btn">Criar</button>
+        <button id="edit-cat-btn" class="action-btn">Gerenciar</button>
+        
+        <div id="categorias-list" class="data-list">
+            </div>
+    </div>
+
+    <div data-array-key="produtos">
+        <h3>## ITENS</h3>
+        <button id="add-item-btn" class="action-btn">Adicionar</button>
+        <button id="edit-item-btn" class="action-btn">Gerenciar</button>
+        
+        <div id="produtos-list" class="data-list">
+            </div>
+    </div>
+
+    <div data-array-key="modos">
+        <h3>## Gerenciar</h3>
+        <button id="create-gerenciar-btn" class="action-btn">Criar (Promoção / Modo)</button>
+        <button id="edit-gerenciar-btn" class="action-btn">Gerenciar</button>
+        <div id="modos-list" class="data-list">
+            </div>
+    </div>
+</section>
+
+<div id="modal-categorias" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h3>Criar/Editar Categoria</h3>
+        <input type="text" id="cat-nome" placeholder="Nome da Categoria">
+        <label><input type="checkbox" id="cat-sub"> Possui Subcategoria?</label>
+        <input type="text" id="cat-sub-nome" placeholder="Nome da Subcategoria (Ex: Sabores)">
+        <button id="save-cat-btn">Salvar Categoria</button>
+    </div>
+</div>
+
+<div id="modal-item" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h3>Adicionar/Editar Item</h3>
+        <input type="text" id="item-nome" placeholder="Nome">
+        <input type="number" id="item-preco" placeholder="Preço">
+        <textarea id="item-descricao" placeholder="Descrição"></textarea>
+        <select id="item-categoria-select"></select>
+        <input type="url" id="item-url-imagem" placeholder="Url Imagem">
+        <input type="number" id="item-estoque" placeholder="Estoque">
+        <label><input type="checkbox" id="item-ativo" checked> Ativo</label>
+        <button id="save-item-btn">Salvar Item</button>
+    </div>
+</div>
             </section>
 
             <section id="customizar" class="tab-content" data-group="customizar">
