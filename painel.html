@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Gerenciamento</title>
+    <link rel="stylesheet" href="Painel.css">
+</head>
+<body>
+
+    <header id="main-header">
+        <h1>Painel de Gestão da Loja</h1>
+        <button id="toggle-menu-btn">||| Menu</button>
+        <div class="header-sac">
+            SAC: PIX@XMAIL.NET
+        </div>
+    </header>
+
+    <div id="app-container">
+        <nav id="sidebar">
+            <ul>
+                <li data-tab="loja" class="active">DADOS DA LOJA</li>
+                <li data-tab="itens">ITENS</li>
+                <li data-tab="customizar">CUSTOMIZAR</li>
+                <li data-tab="publicidades">PUBLICIDADES</li>
+                <li data-tab="preview">PREVIEW</li>
+            </ul>
+            <div class="global-actions">
+                <button id="save-btn">SALVAR / EDITAR</button>
+                <button id="import-json-btn">IMPORTAR JSON</button>
+                <button id="export-json-btn">EXPORTAR JSON</button>
+                <div id="publish-section">
+                    <input type="text" id="bin-id" placeholder="BinID (Seu ID BIN)">
+                    <input type="password" id="master-key" placeholder="Chave (Chave Master)">
+                    <button id="publish-btn">PUBLICAR</button>
+                </div>
+                <button id="visit-btn">VISITAR TOTEM</button>
+            </div>
+        </nav>
+
+        <main id="content-area">
+            
+            <section id="loja" class="tab-content active">
+                <h2>DADOS DA LOJA</h2>
+                <form id="loja-form">
+                    <input type="text" placeholder="Nome da Loja">
+                    <input type="tel" placeholder="Telefone">
+                    <h3>Área de Cobertura</h3>
+                    <div id="cobertura-list"></div>
+                    <input type="text" placeholder="Bairro">
+                    <input type="number" placeholder="Taxa de Entrega">
+                    <button type="button">Cadastrar Bairro</button>
+
+                    <h3>Dados de Pagamento</h3>
+                    </form>
+            </section>
+
+            <section id="itens" class="tab-content">
+                <h2>ITENS (Cardápio)</h2>
+                
+                <h3>Categorias</h3>
+                <button>Criar Categoria</button>
+                <button>Editar Categorias</button>
+
+                <h3>ITENS</h3>
+                <button>Adicionar Item</button>
+                <button>Editar Itens</button>
+                
+                <h3>Gerenciar</h3>
+                <button>Criar Promoção/Modo</button>
+                <button>Editar Modos</button>
+            </section>
+
+            <section id="customizar" class="tab-content">
+                <h2>CUSTOMIZAR (Aparência)</h2>
+                </section>
+
+            <section id="publicidades" class="tab-content">
+                <h2>PUBLICIDADES</h2>
+                </section>
+            
+            <section id="preview" class="tab-content">
+                <h2>PREVIEW (Visualização em Tempo Real)</h2>
+                <iframe id="totem-preview-frame" srcdoc="<h3>Carregando Preview...</h3>"></iframe>
+            </section>
+            
+        </main>
+    </div>
+
+    <script src="Painel.js"></script>
+</body>
+</html>
