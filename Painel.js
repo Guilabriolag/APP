@@ -355,3 +355,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initialize();
 });
+// --- 7. INICIALIZAÇÃO ---
+function initialize() {
+    const initialData = JSON.parse(localStorage.getItem('configData'));
+    if (initialData) {
+        // ... (Aqui seria o código para preencher os inputs simples)
+        
+        // CHAMA A FUNÇÃO QUE RECARREGA OS ARRAYS DE ITENS E CATEGORIAS
+        renderItemsLists(initialData); 
+        
+        // CHAMAMOS UMA FUNÇÃO PARA RECARREGAR A COBERTURA
+        loadCobertura(initialData.loja.cobertura); 
+    }
+    
+    // Simular clique na primeira aba
+    document.querySelector('#sidebar li[data-tab="loja"]').click();
+}
+
+
+// NOVO CÓDIGO: Função para carregar os bairros de volta na tela
+function loadCobertura(coberturaArray) {
+    const list = document.getElementById('cobertura-list');
+    list.innerHTML = ''; // Limpa antes de carregar
+    
+    (coberturaArray || []).forEach(item => {
+        const div = document.createElement('div');
+        div.setAttribute('data-bairro', item.bairro);
+        div.setAttribute('data-taxa', item.taxa);
+        div.className = 'list-item-cobertura';
+        div.innerHTML = `<span>${item.bairro}: R$ ${item.taxa}</span> <button onclick="this.parentNode.remove()">X</button>`;
+        list.appendChild(div);
+    });
+}
