@@ -1,6 +1,22 @@
-/* =========================
-   Reset básico
-========================= */
+/* ==================================================
+1. RESET E ESTILOS GERAIS (MOBILE FIRST)
+==================================================
+*/
+:root {
+    /* Cores */
+    --primary-color: #2c3e50; /* Azul escuro */
+    --secondary-color: #3498db; /* Azul claro / Botões */
+    --bg-color: #f4f7f6; /* Fundo claro */
+    --sidebar-bg: #ecf0f1; /* Fundo da sidebar (Claro) */
+    --text-color: #333;
+    --border-color: #ddd;
+    --success-color: #2ecc71;
+    --danger-color: #e74c3c;
+    
+    /* Espaçamento */
+    --padding-base: 15px;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -9,196 +25,215 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background: #f2f2f2;
-    color: #333;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
 }
 
-/* =========================
-   Layout principal
-========================= */
-#app {
+/* ==================================================
+2. LAYOUT PRINCIPAL (Mobile)
+==================================================
+*/
+
+#main-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: var(--padding-base);
     display: flex;
-    min-height: 100vh;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-/* Sidebar */
+/* Container do App - Layout principal (Mobile: 1 coluna) */
+#app-container {
+    display: flex;
+    flex-direction: column; 
+    width: 100%;
+    min-height: calc(100vh - 50px);
+}
+
+/* ==================================================
+3. NAVEGAÇÃO / SIDEBAR (Mobile)
+==================================================
+*/
+
 #sidebar {
-    width: 250px;
-    background: #3498db;
-    color: white;
-    padding: 20px;
+    background-color: var(--sidebar-bg);
+    width: 100%; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+#sidebar ul {
+    list-style: none;
+    display: flex; /* Transforma em barra horizontal no mobile */
+    overflow-x: auto; 
+    white-space: nowrap; 
+    padding: 0 var(--padding-base);
+    border-bottom: 1px solid var(--border-color);
+}
+
+#sidebar li {
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
     flex-shrink: 0;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
 }
 
-#sidebar h2 {
-    font-size: 1.5em;
-    margin-bottom: 20px;
+#sidebar li.active {
+    color: var(--secondary-color);
+    border-bottom: 3px solid var(--secondary-color);
+    background-color: white;
 }
 
-#sidebar nav a {
-    display: block;
-    color: white;
-    text-decoration: none;
-    padding: 8px 0;
-    margin-bottom: 5px;
-    border-radius: 5px;
-    transition: background 0.3s;
+.global-actions {
+    padding: var(--padding-base);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid var(--border-color);
 }
 
-#sidebar nav a:hover {
-    background: rgba(255,255,255,0.2);
+.global-actions button, .global-actions input {
+    width: 100%;
 }
 
-/* Conteúdo principal */
-main {
-    flex: 1;
-    padding: 20px;
+#publish-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 5px;
+    border-top: 1px solid var(--border-color);
 }
 
-/* =========================
-   Abas e Seções
-========================= */
-.tab {
+/* ==================================================
+4. CONTEÚDO PRINCIPAL / FORMULÁRIOS
+==================================================
+*/
+
+#content-area {
+    padding: var(--padding-base);
+    flex-grow: 1;
+}
+
+.tab-content {
     display: none;
 }
 
-.tab.active {
+.tab-content.active {
     display: block;
 }
 
-.tab h2 {
-    margin-bottom: 15px;
-}
-
-/* =========================
-   Formulários e Grid
-========================= */
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
+/* Estilo dos Inputs e Botões */
+input[type="text"], 
+input[type="number"], 
+input[type="url"], 
+input[type="password"],
+input[type="tel"], 
+select, 
+textarea {
     width: 100%;
-    padding: 8px 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 14px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
 }
 
-/* Checkbox / Label */
-label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-/* =========================
-   Botões
-========================= */
-button {
+button, .action-btn {
     padding: 10px 15px;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s;
+    font-weight: bold;
+    transition: background-color 0.2s;
 }
 
-.btn-primary {
-    background: #3498db;
+#save-btn, #publish-btn {
+    background-color: var(--success-color);
     color: white;
 }
 
-.btn-primary:hover {
-    background: #2980b9;
-}
-
-.btn-secondary {
-    background: #95a5a6;
+.action-btn {
+    background-color: var(--secondary-color);
     color: white;
-}
-
-.btn-secondary:hover {
-    background: #7f8c8d;
-}
-
-.btn-danger {
-    background: #e74c3c;
-    color: white;
-}
-
-.btn-danger:hover {
-    background: #c0392b;
-}
-
-/* =========================
-   Containers para dados JSON
-========================= */
-#listaProdutosContainer,
-#listaClientesContainer,
-#listaCuponsContainer,
-#listaBairrosContainer {
-    background: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    font-family: monospace;
-    white-space: pre-wrap;
-    max-height: 300px;
-    overflow-y: auto;
-    margin-bottom: 20px;
-}
-
-/* =========================
-   Responsivo
-========================= */
-@media (max-width: 1024px) {
-    #app {
-        flex-direction: column;
-    }
-    #sidebar {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
-}
-
-@media (max-width: 768px) {
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* =========================
-   Preview iframe
-========================= */
-#previewIframe {
-    width: 100%;
-    height: 600px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #fff;
-}
-
-/* =========================
-   Pequenos ajustes
-========================= */
-h3 {
+    margin-right: 10px;
     margin-bottom: 10px;
 }
 
-input[type=color] {
-    padding: 0;
-    height: 40px;
-    border: none;
+.data-list button {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    margin-left: 5px;
+    background-color: var(--danger-color);
+    color: white;
+}
+
+/* ==================================================
+6. MEDIA QUERY (ADAPTAÇÃO PARA DESKTOP/TELA GRANDE)
+==================================================
+*/
+@media (min-width: 768px) {
+    
+    /* Container do App: Lado a Lado */
+    #app-container {
+        flex-direction: row; 
+        min-height: calc(100vh - 60px); 
+    }
+
+    /* Navegação / Sidebar */
+    #sidebar {
+        width: 250px; 
+        min-height: 100%; 
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+        padding-top: 15px; /* Adiciona padding no topo para alinhar */
+    }
+
+    /* Reverte a lista de abas para o layout vertical */
+    #sidebar ul {
+        flex-direction: column; 
+        overflow-x: hidden; 
+        border-bottom: none;
+        padding: 0;
+    }
+
+    #sidebar li {
+        border-bottom: none;
+        border-left: 4px solid transparent;
+        margin: 0;
+        padding: 12px 15px;
+    }
+    
+    #sidebar li.active {
+        border-left: 4px solid var(--secondary-color);
+        background-color: white;
+    }
+    
+    /* Conteúdo Principal */
+    #content-area {
+        padding: 25px 40px;
+    }
+    
+    /* Global Actions */
+    .global-actions {
+        position: sticky;
+        top: 60px;
+    }
+    
+    #publish-section {
+        flex-direction: row;
+        gap: 5px;
+    }
+    
+    #publish-section input {
+        width: 50%;
+    }
 }
