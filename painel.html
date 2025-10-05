@@ -3,28 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Gerenciamento</title>
+    <title>Painel de Gerenciamento da Loja</title>
     <link rel="stylesheet" href="Painel.css">
-</head>
+    </head>
 <body>
 
     <header id="main-header">
         <h1>Painel de Gestão da Loja</h1>
-        <div class="header-sac">SAC: PIX@XMAIL.NET</div>
+        <div class="header-sac">
+            SAC: <a href="mailto:PIX@XMAIL.NET">PIX@XMAIL.NET</a>
+        </div>
     </header>
 
     <div id="app-container">
         <nav id="sidebar">
             <ul>
-                <li data-tab="loja" data-key="loja" class="active">DADOS DA LOJA</li>
-                <li data-tab="itens" data-key="itens">ITENS</li>
-                <li data-tab="customizar" data-key="customizar">CUSTOMIZAR</li>
-                <li data-tab="publicidades" data-key="publicidades">PUBLICIDADES</li>
+                <li data-tab="loja" class="active">DADOS DA LOJA</li>
+                <li data-tab="itens">ITENS</li>
+                <li data-tab="customizar">CUSTOMIZAR</li>
+                <li data-tab="publicidades">PUBLICIDADES</li>
                 <li data-tab="preview">PREVIEW</li>
             </ul>
             <div class="global-actions">
                 <button id="save-btn">SALVAR / EDITAR</button>
                 <button id="export-json-btn">EXPORTAR JSON</button>
+                <button id="import-json-btn">IMPORTAR JSON</button>
                 <div id="publish-section">
                     <input type="text" id="bin-id" placeholder="BinID (Seu ID BIN)">
                     <input type="password" id="master-key" placeholder="Chave (Chave Master)">
@@ -44,22 +47,23 @@
                 <input type="tel" data-key="telefone" placeholder="Telefone">
                 <input type="text" data-key="endereco" placeholder="Endereço">
                 <input type="url" data-key="urlLogo" placeholder="Url Imagem da Logo">
-                <input type="text" data-key="horarioFunc" placeholder="Horário e data de funcionamento">
+                <input type="text" data-key="horarioFunc" placeholder="Horário e data de funcionamento (Ex: Seg-Sex, 08h-18h)">
 
-                <h3>Área de Cobertura</h3>
-                <div id="cobertura-container" data-array-key="cobertura">
-                    <div id="cobertura-list"></div>
-                    <input type="text" id="bairro-input" placeholder="Bairro">
-                    <input type="number" id="taxa-input" placeholder="Taxa de Entrega">
-                    <button type="button" id="add-cobertura-btn">Cadastrar Bairro</button>
+                <h3>Área de Cobertura (Entrega)</h3>
+                <div id="cobertura-container">
+                    <div id="cobertura-list" class="data-list"></div>
+                    <input type="text" id="bairro-input" placeholder="Cadastrar Bairro">
+                    <input type="number" id="taxa-input" placeholder="Taxa de Entrega (R$)">
+                    <button type="button" id="add-cobertura-btn">Adicionar Bairro e Taxa</button>
                 </div>
 
                 <h3>Dados de Pagamento</h3>
                 <h4>PIX</h4>
                 <input type="text" data-key="pixChave" placeholder="Chave PIX">
                 <input type="text" data-key="pixNome" placeholder="Nome/Titular">
-                <input type="text" data-key="pixInstituicao" placeholder="Instituição">
-                <h4>Cripto (Em breve)</h4>
+                <input type="text" data-key="pixInstituicao" placeholder="Instituição/Banco">
+                
+                <h4>Criptomoedas (Em breve)</h4>
                 <input type="text" data-key="btcChave" placeholder="Chave Bitcoin">
                 <input type="text" data-key="lightningChave" placeholder="Chave Lightning">
             </section>
@@ -67,98 +71,45 @@
             <section id="itens" class="tab-content" data-group="itens">
                 <h2>ITENS (Cardápio)</h2>
                 
-                <div data-array-key="categorias">
-                    <h3>## Categorias</h3>
-                    <button id="create-cat-btn">Criar</button>
-                    <button id="edit-cat-btn">Editar</button>
-                    </div>
+                <h3>## Categorias</h3>
+                <button id="create-cat-btn" class="action-btn">Criar</button>
+                <button id="manage-cat-btn" class="action-btn">Gerenciar</button>
+                <div id="categorias-list" class="data-list"></div>
 
-                <div data-array-key="produtos">
-                    <h3>## ITENS</h3>
-                    <button id="add-item-btn">Adicionar</button>
-                    <button id="edit-item-btn">Editar</button>
-                    </div>
+                <h3>## ITENS (Produtos)</h3>
+                <button id="add-item-btn" class="action-btn">Adicionar</button>
+                <button id="manage-item-btn" class="action-btn">Gerenciar</button>
+                <div id="produtos-list" class="data-list"></div>
 
-                <div data-array-key="modos">
-                    <h3>## Gerenciar</h3>
-                    <button id="create-gerenciar-btn">Criar (Promoção / Modo)</button>
-                    <button id="edit-gerenciar-btn">Editar</button>
-                </div>
-                <section id="itens" class="tab-content" data-group="itens">
-    <h2>ITENS (Cardápio)</h2>
-    
-    <div data-array-key="categorias">
-        <h3>## Categorias</h3>
-        <button id="create-cat-btn" class="action-btn">Criar</button>
-        <button id="edit-cat-btn" class="action-btn">Gerenciar</button>
-        
-        <div id="categorias-list" class="data-list">
-            </div>
-    </div>
-
-    <div data-array-key="produtos">
-        <h3>## ITENS</h3>
-        <button id="add-item-btn" class="action-btn">Adicionar</button>
-        <button id="edit-item-btn" class="action-btn">Gerenciar</button>
-        
-        <div id="produtos-list" class="data-list">
-            </div>
-    </div>
-
-    <div data-array-key="modos">
-        <h3>## Gerenciar</h3>
-        <button id="create-gerenciar-btn" class="action-btn">Criar (Promoção / Modo)</button>
-        <button id="edit-gerenciar-btn" class="action-btn">Gerenciar</button>
-        <div id="modos-list" class="data-list">
-            </div>
-    </div>
-</section>
-
-<div id="modal-categorias" class="modal">
-    <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h3>Criar/Editar Categoria</h3>
-        <input type="text" id="cat-nome" placeholder="Nome da Categoria">
-        <label><input type="checkbox" id="cat-sub"> Possui Subcategoria?</label>
-        <input type="text" id="cat-sub-nome" placeholder="Nome da Subcategoria (Ex: Sabores)">
-        <button id="save-cat-btn">Salvar Categoria</button>
-    </div>
-</div>
-
-<div id="modal-item" class="modal">
-    <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h3>Adicionar/Editar Item</h3>
-        <input type="text" id="item-nome" placeholder="Nome">
-        <input type="number" id="item-preco" placeholder="Preço">
-        <textarea id="item-descricao" placeholder="Descrição"></textarea>
-        <select id="item-categoria-select"></select>
-        <input type="url" id="item-url-imagem" placeholder="Url Imagem">
-        <input type="number" id="item-estoque" placeholder="Estoque">
-        <label><input type="checkbox" id="item-ativo" checked> Ativo</label>
-        <button id="save-item-btn">Salvar Item</button>
-    </div>
-</div>
+                <h3>## Gerenciar (Modos/Promoções)</h3>
+                <button id="create-gerenciar-btn" class="action-btn">Criar (Modo/Promoção)</button>
+                <button id="manage-gerenciar-btn" class="action-btn">Gerenciar</button>
+                <div id="modos-list" class="data-list"></div>
             </section>
 
             <section id="customizar" class="tab-content" data-group="customizar">
-                <h2>CUSTOMIZAR</h2>
-                <input type="color" data-key="cor1" placeholder="Cor 1">
-                <input type="color" data-key="cor2" placeholder="Cor 2">
-                <input type="text" data-key="fundoUrlCor" placeholder="Cor ou URL imagem de fundo">
+                <h2>CUSTOMIZAR (Aparência)</h2>
+                
+                <h3>Cores e Fundo</h3>
+                <label>Cor 1 (Principal): <input type="color" data-key="cor1" value="#1abc9c"></label>
+                <label>Cor 2 (Secundária): <input type="color" data-key="cor2" value="#3498db"></label>
+                <input type="text" data-key="fundoUrlCor" placeholder="Cor (Ex: #f4f4f4) ou URL Imagem de fundo">
                 <input type="text" data-key="carrinhoUrlCor" placeholder="Cor ou URL Imagem do carrinho">
+                
+                <h3>Áudio</h3>
                 <input type="url" data-key="musicaUrl" placeholder="Url Música (YouTube ou Spotify)">
                 <label><input type="checkbox" data-key="musicaAutoplay"> Autoplay</label>
-                <input type="range" data-key="musicaVolume" min="0" max="100" value="50"> Volume
+                <label>Volume: <input type="range" data-key="musicaVolume" min="0" max="100" value="50"></label>
             </section>
 
             <section id="publicidades" class="tab-content" data-group="publicidades">
                 <h2>PUBLICIDADES</h2>
                 
-                <h3>Banners</h3>
-                <input type="text" data-key="textBanner" placeholder="Text banner">
-                <div data-array-key="banners">
-                    <input type="url" data-key="banner1Url" placeholder="Url Imagen banner 1">
+                <h3>Banners e Textos</h3>
+                <input type="text" data-key="textBanner" placeholder="Texto Banner fixo">
+                <p><strong>Banners Carrossel (5 Slots)</strong></p>
+                <div id="banner-slots-container">
+                    <input type="url" data-key="banner1Url" placeholder="Url Imagem banner 1">
                     <input type="url" data-key="banner1Link" placeholder="Link do banner 1">
                 </div>
 
@@ -166,14 +117,18 @@
                 <textarea data-key="msgBoasVindas" placeholder="Mensagem de Boas-vindas (pop-up)"></textarea>
                 <textarea data-key="msgPromocional" placeholder="Mensagem Promocional (pop-up) ao adicionar o primeiro item"></textarea>
 
-                <h3>Cupons</h3>
-                <button id="create-cupom-btn">Criar Cupom</button>
-                <div id="cupons-list" data-array-key="cupons"></div>
+                <h3>Cupons e Redes</h3>
+                <button id="create-cupom-btn">Criar Novo Cupom</button>
+                <div id="cupons-list" class="data-list"></div>
 
-                <h3>Icon Redes Sociais</h3>
-                <input type="url" data-key="instagramUrl" placeholder="Instagram.com">
-                <input type="url" data-key="xUrl" placeholder="X.com">
-                </section>
+                <h4>Icon Redes Sociais</h4>
+                <div id="redes-sociais-container">
+                    <input type="url" data-key="instagramUrl" placeholder="Instagram.com">
+                    <input type="url" data-key="xUrl" placeholder="X.com">
+                    <input type="url" data-key="facebookUrl" placeholder="Facebook.com">
+                </div>
+                <div id="redes-list" class="data-list"></div>
+            </section>
             
             <section id="preview" class="tab-content">
                 <h2>PREVIEW (Visualização em Tempo Real)</h2>
@@ -183,6 +138,34 @@
         </main>
     </div>
 
+    <div id="modal-categorias" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>Criar/Editar Categoria</h3>
+            <input type="hidden" id="cat-id-edit">
+            <input type="text" id="cat-nome" placeholder="Nome da Categoria">
+            <label><input type="checkbox" id="cat-sub"> Possui Subcategoria? (Ex: Tamanho, Sabor)</label>
+            <input type="text" id="cat-sub-nome" placeholder="Nome da Subcategoria (Opcional)">
+            <button id="save-cat-btn">Salvar Categoria</button>
+        </div>
+    </div>
+
+    <div id="modal-item" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>Adicionar/Editar Item</h3>
+            <input type="hidden" id="item-id-edit">
+            <input type="text" id="item-nome" placeholder="Nome do Item">
+            <input type="number" id="item-preco" placeholder="Preço (R$)">
+            <textarea id="item-descricao" placeholder="Descrição do Item"></textarea>
+            <label>Categoria: <select id="item-categoria-select"></select></label>
+            <input type="url" id="item-url-imagem" placeholder="Url Imagem do Produto">
+            <input type="number" id="item-estoque" placeholder="Estoque (0 = ilimitado)">
+            <label><input type="checkbox" id="item-ativo" checked> Item Ativo (Visível no Totem)</label>
+            <button id="save-item-btn">Salvar Item</button>
+        </div>
+    </div>
+    
     <script src="Painel.js"></script>
 </body>
 </html>
