@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Botões e Modais de ITENS
     const createCatBtn = document.getElementById('create-cat-btn');
-    const manageCatBtn = document.getElementById('manage-cat-btn');
     const saveCatBtn = document.getElementById('save-cat-btn');
     const addIitemBtn = document.getElementById('add-item-btn');
     const saveItemBtn = document.getElementById('save-item-btn');
@@ -54,8 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
                               <button data-id="${prod.id}" class="edit-item">Editar</button> <button data-id="${prod.id}" class="delete-item">Excluir</button>`;
             produtosList.appendChild(item);
         });
-        
-        // **TODO: Implementar event listeners para editar/excluir**
     }
 
 
@@ -84,6 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             
             // LÓGICA DE ARRAYS
+            let existingData = JSON.parse(localStorage.getItem('configData'));
+            
             if (groupKey === 'loja') {
                 // Área de Cobertura
                 const coberturaList = Array.from(document.querySelectorAll('#cobertura-list > div')).map(item => ({
@@ -93,17 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 groupData.cobertura = coberturaList;
             }
 
-            // Para ITENS e PUBLICIDADES, carregamos os arrays do localStorage, se existirem
-            // Se estiver vazio, inicializa com array vazio para não quebrar o preview
-            let existingData = JSON.parse(localStorage.getItem('configData'));
             if (groupKey === 'itens') {
+                // Mantém os arrays de itens e categorias do estado salvo
                 groupData.categorias = existingData?.itens?.categorias || [];
                 groupData.produtos = existingData?.itens?.produtos || [];
                 groupData.modos = existingData?.itens?.modos || [];
             }
             if (groupKey === 'publicidades') {
                 groupData.cupons = existingData?.publicidades?.cupons || [];
-                // **TODO: Adicionar banners e redes sociais aqui**
             }
 
             data[groupKey] = groupData;
@@ -111,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return data;
     }
-
+    
     // --- 2. FUNÇÕES DE AÇÃO GERAL ---
 
     // SALVAR/EDITAR (localStorage)
@@ -250,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
             subNome: temSub ? subNome : null
         };
         
-        // Lógica de Edição (Se editId existir, substitui) ou Criação (adiciona)
+        // Lógica de Edição ou Criação
         if (editId) {
             data.itens.categorias = data.itens.categorias.map(c => c.id == editId ? novaCat : c);
             alert(`Categoria "${nome}" atualizada!`);
@@ -264,14 +260,12 @@ document.addEventListener('DOMContentLoaded', () => {
         renderItemsLists(data);
     });
 
-    // **TODO: Implementar funções addIitemBtn e saveItemBtn de forma semelhante**
+    // **TODO: Implementar funções addIitemBtn e saveItemBtn de forma semelhante à gestão de categorias**
 
 
     // --- 6. PREVIEW DO TOTEM ---
 
     function generateTotemHtml(data) {
-        // (A função generateTotemHtml completa deve ser colada aqui ou antes)
-        // Usaremos a versão do passo anterior
         const loja = data.loja || {};
         const customizar = data.customizar || {};
         const itens = data.itens || { categorias: [], produtos: [] };
@@ -333,10 +327,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 7. INICIALIZAÇÃO ---
     function initialize() {
-        // Carrega dados iniciais do localStorage se existirem e preenche os inputs
         const initialData = JSON.parse(localStorage.getItem('configData'));
         if (initialData) {
-            // **TODO: Implementar loadDataIntoForms(initialData) aqui**
+            // **TODO: Implementar loadDataIntoForms(initialData) aqui para preencher os inputs**
             renderItemsLists(initialData);
         }
         
