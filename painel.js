@@ -172,7 +172,96 @@ document.addEventListener('DOMContentLoaded', () => {
         const totemHtml = generateTotemHtml(dataToDisplay);
         previewFrame.srcdoc = totemHtml;
     }
+/**
+ * Traduz os dados de configuração (data) em uma string HTML
+ * que representa o layout final do Totem para ser exibida no iframe de preview.
+ * @param {object} data - O objeto JSON contendo todas as configurações da loja.
+ */
+function generateTotemHtml(data) {
+    const loja = data.loja || {};
+    const customizar = data.customizar || {};
+    const itens = data.itens || { categorias: [], produtos: [] };
 
+    // --- Estilos Base (Usando dados de Customização) ---
+    const style = `
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            background-color: ${customizar.fundoUrlCor || '#f4f4f4'}; 
+            color: ${customizar.cor1 || '#333'}; 
+        }
+        .totem-header { 
+            background-color: ${customizar.cor2 || '#2c3e50'}; 
+            color: white; 
+            padding: 10px; 
+            text-align: center; 
+            font-weight: bold; 
+        }
+        .totem-category-bar { 
+            display: flex; 
+            overflow-x: auto; 
+            padding: 10px 0; 
+            background-color: #ecf0f1; 
+            border-bottom: 1px solid #ddd;
+        }
+        .totem-category-bar button { 
+            flex-shrink: 0; /* Não encolhe os botões */
+            margin: 0 5px; 
+            padding: 8px 15px; 
+            border: 1px solid #ccc; 
+            background-color: white; 
+            border-radius: 20px;
+            color: ${customizar.cor1 || '#333'};
+        }
+        .totem-item-card { 
+            border: 1px solid #ddd; 
+            margin: 10px; 
+            padding: 15px; 
+            border-radius: 8px; 
+            background: white; 
+            text-align: center;
+        }
+    `;
+
+    // --- Conteúdo Dinâmico ---
+    const categoriesHtml = (itens.categorias || []).map(cat => 
+        `<button>${cat.nome}</button>`
+    ).join('');
+
+    // Exibe até 3 itens aleatórios (ou os 3 primeiros)
+    const randomItems = (itens.produtos || []).slice(0, 3).map(prod => `
+        <div class="totem-item-card">
+            <h4>${prod.nome}</h4>
+            <p>R$ ${prod.preco ? prod.preco.toFixed(2) : '0.00'}</p>
+            <button style="background: ${customizar.cor2 || '#2ecc71'}; color: white; border: none; padding: 10px;">Adicionar ao Carrinho</button>
+        </div>
+    `).join('');
+
+    // --- HTML Final do Totem ---
+    return `
+        <style>${style}</style>
+        
+        <div class="totem-header">
+            ${loja.urlLogo ? `<img src="${loja.urlLogo}" alt="Logo" style="height: 30px; margin-right: 10px;">` : ''}
+            ${loja.nome || 'NOME DA LOJA'}
+        </div>
+        
+        <div class="totem-category-bar">
+            ${categoriesHtml || '<span>Nenhuma Categoria Cadastrada.</span>'}
+        </div>
+        
+        <div style="padding: 10px;">
+            <h3>Destaques do Cardápio</h3>
+            <p style="font-size: 0.8em;">Total de itens no JSON: ${(itens.produtos || []).length}</p>
+            ${randomItems || '<p>Cadastre itens para ver o cardápio.</p>'}
+        </div>
+        
+        <div style="text-align: center; padding: 15px; background: #eee;">
+            <button style="background: ${customizar.cor2 || '#3498db'}; color: white; padding: 10px;">Delivery</button>
+            <button style="background: ${customizar.cor1 || '#2ecc71'}; color: white; padding: 10px;">Retirar</button>
+        </div>
+    `;
+}
     // Inicialização
     if (localStorage.getItem('configData')) {
         // Se houver dados salvos, você pode carregar eles nos inputs aqui (lógica de loadData)
@@ -290,3 +379,62 @@ function renderItemsLists(data) {
 //    const initialData = JSON.parse(localStorage.getItem('configData'));
 //    renderItemsLists(initialData);
 // }
+// Adicione o seguinte código ao final do seu Painel.js
+
+// --- LÓGICA DE EXPORTAÇÃO JSON ---
+document.getElementById('export-json-btn').addEventListener('click', () => {
+    const data = localStorage.getItem('configData');
+    if (!data) {
+        alert('Não há dados salvos localmente para exportar.');
+        return;
+    }
+
+    const jsonString = JSON.stringify(JSON.parse(data), null, 2); // Formatação para legibilidade
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'configuracao_painel_loja.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    alert('Configurações exportadas como configuracao_painel_loja.json!');
+});
+
+
+// --- LÓGICA DE IMPORTAÇÃO JSON ---
+document.getElementById('import-json-btn').addEventListener('click', () => {
+    // Cria um input de arquivo temporário
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json';
+    
+    input.onchange = (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const importedData = JSON.parse(e.target.result);
+                
+                // Validação básica (garante que tem a estrutura de dados esperada)
+                if (typeof importedData.loja === 'object' && typeof importedData.itens === 'object') {
+                    localStorage.setItem('configData', JSON.stringify(importedData));
+                    alert('✨ Configurações importadas com sucesso! Salve para publicar.');
+                    location.reload(); // Recarrega a página para aplicar os novos dados
+                } else {
+                    alert('❌ Erro: O arquivo JSON não parece ser um arquivo de configuração válido.');
+                }
+            } catch (error) {
+                alert('❌ Erro ao processar o arquivo JSON. Verifique a formatação.');
+                console.error('Import Error:', error);
+            }
+        };
+        reader.readAsText(file);
+    };
+    
+    input.click(); // Abre a janela de seleção de arquivo
+});
